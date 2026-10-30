@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Don Bosco Smart Campus — Demo</title>
+<style>
+:root{--navy:#091426;--panel:#12233d;--gold:#d8b875;--cream:#f5f0e4;--muted:#aab6c8;--line:#2a3b55;--green:#76c7a2;--red:#e58b8b}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--cream);font-family:Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:12px 16px;background:var(--gold);color:#101a2a;font-weight:700}.ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}.muted{color:var(--muted)}.hidden{display:none!important}
+#landing{min-height:100vh;display:flex;flex-direction:column;padding:24px 7%;background:radial-gradient(ellipse at center,#203a5b 0,#101f36 45%,#091426 80%);text-align:center}
+nav{display:flex;justify-content:space-between;align-items:center}.logo{font-family:Georgia,serif;font-size:25px;color:var(--gold);letter-spacing:2px}.tag{font-size:11px;letter-spacing:3px;color:var(--muted)}
+.hero{margin:auto;max-width:760px;padding:55px 0}.seal{width:142px;height:142px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;margin:0 auto 28px;box-shadow:0 0 55px #d8b87522;animation:float 4s ease-in-out infinite}.seal div{border:1px solid #d8b87588;border-radius:50%;width:122px;height:122px;display:grid;place-items:center;font: bold 22px Georgia;color:var(--gold);line-height:1.2}.eyebrow{font-size:10px;letter-spacing:4px;color:var(--gold)}h1{font:500 clamp(30px,7vw,58px)/1.25 Georgia,serif;letter-spacing:2px;margin:16px 0}h1 span{color:var(--gold)}.sub{color:#c1c9d4;letter-spacing:1.5px;margin:18px 0 30px}.landing-foot{font-size:10px;letter-spacing:2px;color:var(--muted);padding:18px;border-top:1px solid #d8b87533}@keyframes float{50%{transform:translateY(-10px)}}
+#app{min-height:100vh;padding:22px;max-width:1100px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding-bottom:16px}.top h2{font:24px Georgia;color:var(--gold);margin:0}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0}.login{max-width:430px;margin:8vh auto}.field{display:block;margin:14px 0;color:var(--muted);font-size:13px}.field input,.field select{display:block;width:100%;padding:13px;margin-top:7px;border:1px solid var(--line);border-radius:9px;background:#0b192c;color:white}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.stat{font-size:28px;color:var(--gold);font-weight:700}.pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#243954;color:#d9e2ef;font-size:11px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:490px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--gold)}.status{font-size:12px;color:var(--green)}.departed{color:var(--gold)}.actions{display:flex;gap:8px;flex-wrap:wrap}.small{padding:8px 11px;font-size:12px}.notice{background:#27344a;border-left:3px solid var(--gold);padding:12px;border-radius:8px;color:#e9dfc8;font-size:13px;margin:12px 0}
+</style>
+</head>
+<body>
+<section id="landing">
+<nav><div class="logo">DB.</div><div class="tag">SMART CAMPUS</div></nav>
+<div class="hero">
+<div class="eyebrow">WELCOME TO DON BOSCO</div>
+<div class="seal"><div>DON<br>BOSCO</div></div>
+<div class="eyebrow">A NEW ERA OF CAMPUS MANAGEMENT</div>
+<h1>DON BOSCO<br><span>SMART CAMPUS</span></h1>
+<p class="sub">One campus. One connected system.</p>
+<button onclick="showLogin()">ENTER PORTAL&nbsp; →</button>
+</div>
+<div class="landing-foot">ATTENDANCE · ACADEMICS · ADMINISTRATION</div>
+</section>
+<section id="app" class="hidden">
+<div class="top"><h2>DON BOSCO <span class="muted">/ SMART CAMPUS</span></h2><button class="ghost small" onclick="home()">Exit demo</button></div>
+<div id="login" class="card login">
+<h2 style="color:var(--gold);font-family:Georgia">Demo sign in</h2>
+<p class="muted">Choose a demonstration role. No real accounts are used.</p>
+<label class="field">Your name<input id="person" value="Demo User" /></label>
+<label class="field">Role<select id="role"><option value="teacher">Subject teacher</option><option value="office">Office staff</option><option value="principal">Principal</option></select></label>
+<button onclick="login()">Open dashboard</button>
+<p class="muted" style="font-size:11px;margin-top:15px">Demonstration only · fictional student records</p>
+</div>
+<div id="dashboard" class="hidden">
+<div class="row"><div><p class="eyebrow">DASHBOARD</p><h2 id="welcome">Welcome</h2><p class="muted" id="roleline"></p></div><span class="pill">DEMO MODE</span></div>
+<div class="grid">
+<div class="card"><div class="muted">Students in sample class</div><div class="stat">5</div></div>
+<div class="card"><div class="muted">Marked present this period</div><div class="stat" id="presentCount">0</div></div>
+<div class="card"><div class="muted">Early departures recorded</div><div class="stat" id="departureCount">0</div></div>
+</div>
+<div id="teacherPanel" class="card hidden">
+<div class="row"><h3>Period attendance</h3><span class="pill">1st PUC · PCMC</span></div>
+<div class="grid"><label class="field">Subject<select id="subject"><option>Physics</option><option>Chemistry</option><option>Mathematics</option><option>Computer Science</option><option>English</option></select></label><label class="field">Period<select id="period"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label></div>
+<div class="notice">Students with an authorised early departure are flagged here. Follow college policy when recording their attendance.</div>
+<div class="tablewrap"><table><thead><tr><th>Student</th><th>Current status</th><th>Attendance</th></tr></thead><tbody id="teacherRows"></tbody></table></div>
+<button onclick="submitAttendance()">Submit period attendance</button>
+</div>
+<div id="officePanel" class="card hidden">
+<h3>Early departure register</h3><p class="muted">Record a permitted departure so relevant teachers can see it.</p>
+<label class="field">Student<select id="departStudent"><option value="Aarav">Aarav Sharma</option><option value="Diya">Diya Rao</option><option value="Ishaan">Ishaan Kumar</option><option value="Meera">Meera Nair</option><option value="Kabir">Kabir Das</option></select></label>
+<label class="field">Departure time<input id="departTime" type="time" value="12:00"></label>
+<label class="field">Reason / note<input id="reason" placeholder="e.g. Parent-approved early departure"></label>
+<button onclick="recordDeparture()">Record departure</button>
+<h3>Today's departure records</h3><div id="departureList" class="muted">No departures recorded yet.</div>
+</div>
+<div id="principalPanel" class="card hidden">
+<h3>College overview</h3><p class="muted">Sample college-wide view across sections.</p>
+<div class="notice">Principal access: overview of attendance and early departures across all sections.</div>
+<div class="tablewrap"><table><thead><tr><th>Section</th><th>Students</th><th>Departures</th><th>Overview</th></tr></thead><tbody><tr><td>1st PUC PCMC</td><td>5</td><td id="pDepart">0</td><td>Demo data</td></tr><tr><td>1st PUC PCMB</td><td>—</td><td>—</td><td>Not configured</td></tr><tr><td>2nd PUC PCMC</td><td>—</td><td>—</td><td>Not configured</td></tr></tbody></table></div>
+</div>
+</div>
+</section>
+<script>
+const students=[{id:"Aarav",name:"Aarav Sharma"},{id:"Diya",name:"Diya Rao"},{id:"Ishaan",name:"Ishaan Kumar"},{id:"Meera",name:"Meera Nair"},{id:"Kabir",name:"Kabir Das"}];
+let departures={},attendance={};
+function showLogin(){document.getElementById('landing').classList.add('hidden');document.getElementById('app').classList.remove('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('dashboard').classList.add('hidden')}
+function home(){document.getElementById('app').classList.add('hidden');document.getElementById('landing').classList.remove('hidden')}
+function login(){let role=document.getElementById('role').value;document.getElementById('login').classList.add('hidden');document.getElementById('dashboard').classList.remove('hidden');document.getElementById('welcome').textContent='Welcome, '+(document.getElementById('person').value||'User');document.getElementById('roleline').textContent=({teacher:'Subject teacher · Assigned class: 1st PUC PCMC',office:'Office staff · Student departure management',principal:'Principal · College-wide overview'})[role];['teacherPanel','officePanel','principalPanel'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(role+'Panel').classList.remove('hidden');render()}
+function render(){document.getElementById('departureCount').textContent=Object.keys(departures).length;document.getElementById('pDepart').textContent=Object.keys(departures).length;document.getElementById('departureList').innerHTML=Object.keys(departures).length?Object.values(departures).map(d=>'<p> <b>'+d.name+'</b> · '+d.time+' · '+d.reason+'</p>').join(''):'No departures recorded yet.';document.getElementById('teacherRows').innerHTML=students.map(s=>{let d=departures[s.id];return '<tr><td>'+s.name+'</td><td class="'+(d?'departed':'status')+'">'+(d?'Early departure · '+d.time:'On campus / no departure recorded')+'</td><td><select data-id="'+s.id+'"><option>Present</option><option>Absent</option><option>Not marked</option></select></td></tr>'}).join('');}
+function recordDeparture(){let id=document.getElementById('departStudent').value;departures[id]={name:students.find(s=>s.id===id).name,time:document.getElementById('departTime').value,reason:document.getElementById('reason').value||'Authorised departure'};render();alert('Demo departure recorded. The teacher dashboard will now show the update.')}
+function submitAttendance(){let selects=[...document.querySelectorAll('#teacherRows select')];attendance=Object.fromEntries(selects.map(s=>[s.dataset.id,s.value]));document.getElementById('presentCount').textContent=Object.values(attendance).filter(x=>x==='Present').length;alert('Demo attendance submitted for '+document.getElementById('subject').value+', period '+document.getElementById('period').value+'.')}
+</script>
+</body>
+</html>
